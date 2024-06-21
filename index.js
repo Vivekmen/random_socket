@@ -61,20 +61,23 @@ io.on("connection", (socket) => {
       // io.emit('displayscore',playerscore)
       let arr = Object.values(playerscore);
       let max = Math.max(...arr);
-      // const playerarr = Object.keys(playerscore);
-      
-      // for (let i = 0; i < playerarr.length; i++) {
-      //   if (playerscore.playerarr[i] === max) {
-      //     winners.push(playerarr[i]);
-      //   }
-      //     console.log("🚀 ~ socket.on ~ winners:", winners)
-      // }
-      io.emit("winner", { winner: max, player: playerscore });
+   
+      console.log(playerscore);
+      for (const p in playerscore) {
+   
+        console.log(playerscore.p===max);
+        if (playerscore[p] === max) {
+          console.log("hii");
+            winners.push(p);
+        }
+          console.log(winners);
+      }
+      // io.emit("winner", { winner: max, player: playerscore });
     }
   });
-});
+});   
 
-server.listen("4000", () => {
-  console.log("server is listing on http://localhost:4000");
+server.listen("4001", () => {
+  console.log("server is listing on http://localhost:4001");
 });
    
