@@ -10,7 +10,7 @@ const io = new Server(server);
 
 const player = {};
 const playerscore = {};
-
+let resetinterval;
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname + "/public/index.html"));
 });
@@ -69,21 +69,25 @@ io.on("connection", (socket) => {
       
 
       io.to("yudiz").emit("winner", { winner: max, player: playerscore });
-      setInterval(reset,20000);
+      // let resetinterval=setInterval(reset,20000);
     }
 
-    function reset(){
-      delete playerscore.a;
-     delete playerscore.b;
-     delete playerscore.c;
+    // function reset(){
+    //   delete playerscore.a;
+    //  delete playerscore.b;
+    //  delete playerscore.c;
 
-      io.emit('resetgame',playerscore)
-    }
-  });
+    //   io.emit('resetgame',playerscore)
+    //   clearInterval(resetinterval)
+    // }
+  }); 
+
   
-});    
+});   
+
  
 server.listen("4001", () => {
   console.log("server is listing on http://localhost:4001");
   
-})
+}) 
+    

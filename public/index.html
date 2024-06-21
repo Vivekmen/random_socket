@@ -15,6 +15,7 @@
     <script src="/socket.io/socket.io.js"></script>
     <script>
       const socket = io();
+     
       const text = document.getElementById("text");
       const text2 = document.getElementById("text2");
       const text3 = document.getElementById("text3");
@@ -29,7 +30,7 @@
           text.innerHTML = "player 3";
         }
       });
-
+      
       socket.emit("join room", "yudiz");
       socket.on("error", (errorstring) => {
         text2.innerHTML = errorstring;
@@ -66,13 +67,11 @@
         text3.innerHTML = `${win}`;
       });
 
-
-      socket.on('resetgame',(playerscore)=>{
-       
-        text3.innerHTML='';
-        boxList.innerHTML="";
-        clearInterval();
-      })
+      // socket.on("resetgame", (playerscore) => {
+      //   text3.innerHTML = "";
+      //   boxList.innerHTML = "";
+        
+      // });
     </script>
   </body>
 </html>
