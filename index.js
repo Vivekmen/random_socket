@@ -10,7 +10,7 @@ const io = new Server(server);
 
 const player = {};
 const playerscore = {};
-let winners;
+
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname + "/public/index.html"));
 });
@@ -46,38 +46,44 @@ io.on("connection", (socket) => {
     console.log("user disconnected");
   });
 
+
+  socket.on('join room',(roomname)=>{
+    socket.join(roomname)
+ })
   socket.on("addScore", (number) => {
     if (socket.id === player.a) {
       playerscore.a = number;
-      io.emit("displayscore", { score: playerscore.a, name: "player1" });
+      io.to("yudiz").emit("displayscore", { score: playerscore.a, name: "player1" });
     } else if (socket.id === player.b) {
       playerscore.b = number;
-      io.emit("displayscore", { score: playerscore.b, name: "player2" });
+      io.to("yudiz").emit("displayscore", { score: playerscore.b, name: "player2" });
     } else if (socket.id === player.c) {
       playerscore.c = number;
-      io.emit("displayscore", { score: playerscore.c, name: "player3" });
+      io.to("yudiz").emit("displayscore", { score: playerscore.c, name: "player3" });
     }
     if (Object.keys(playerscore).length === 3) {
       // io.emit('displayscore',playerscore)
       let arr = Object.values(playerscore);
       let max = Math.max(...arr);
    
-      console.log(playerscore);
-      for (const p in playerscore) {
-   
-        console.log(playerscore.p===max);
-        if (playerscore[p] === max) {
-          console.log("hii");
-            winners.push(p);
-        }
-          console.log(winners);
-      }
-      // io.emit("winner", { winner: max, player: playerscore });
+      
+
+      io.to("yudiz").emit("winner", { winner: max, player: playerscore });
+      setInterval(reset,20000);
+    }
+
+    function reset(){
+      delete playerscore.a;
+     delete playerscore.b;
+     delete playerscore.c;
+
+      io.emit('resetgame',playerscore)
     }
   });
-});   
-
+  
+});    
+ 
 server.listen("4001", () => {
   console.log("server is listing on http://localhost:4001");
-});
-   
+  
+})
