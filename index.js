@@ -16,7 +16,6 @@ let resetinterval;
 //   res.sendFile(path.join(__dirname + "/public/index.html"));
 // });
 
-console.log("branch");
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname + "/public/index.html"));
 });
