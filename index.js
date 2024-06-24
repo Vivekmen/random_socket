@@ -11,6 +11,8 @@ const io = new Server(server);
 const player = {};
 const playerscore = {};
 let resetinterval;
+
+console.log("hiiii");
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname + "/public/index.html"));
 });
