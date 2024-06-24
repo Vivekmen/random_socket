@@ -8,9 +8,15 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
+// const pl=["a","b","c"];
 const player = {};
 const playerscore = {};
 let resetinterval;
+// app.get("/", (req, res) => {
+//   res.sendFile(path.join(__dirname + "/public/index.html"));
+// });
+
+console.log("branch");
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname + "/public/index.html"));
 });
@@ -21,6 +27,8 @@ io.on("connection", (socket) => {
     socket.emit("error", "only 3 player join in this game");
     socket.disconnect();
   }
+
+
   if (!player.a) {
     player.a = socket.id;
     socket.emit("playerRole", "a");
@@ -31,7 +39,7 @@ io.on("connection", (socket) => {
     player.c = socket.id;
     socket.emit("playerRole", "c");
   }
-
+    
   socket.on("disconnect", () => {
     if (socket.id === player.a) {
       delete player.a;
@@ -90,4 +98,4 @@ server.listen("4001", () => {
   console.log("server is listing on http://localhost:4001");
   
 }) 
-    
+       
